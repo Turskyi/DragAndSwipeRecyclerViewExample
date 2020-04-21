@@ -5,9 +5,10 @@ import com.chad.library.adapter.base.module.DraggableModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import ua.turskyi.dragandswiperecyclerviewexample.R
 
-class DragAndSwipeAdapter(data: MutableList<String>?) :
-    BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_draggable_view, data),
+class DragAndSwipeAdapter :
+    BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_draggable_view,  mutableListOf()),
     DraggableModule {
+
     override fun convert(holder: BaseViewHolder, item: String) {
         when (holder.layoutPosition % 3) {
             0 -> holder.setImageResource(R.id.iv_head, R.mipmap.head_img0)

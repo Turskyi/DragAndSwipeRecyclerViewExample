@@ -27,9 +27,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_universal_recycler) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_universal_recycler)
-        title = "Drag And Swipe"
-        rv.layoutManager = LinearLayoutManager(this)
+        val mAdapter = initView()
+        initListeners(mAdapter)
+    }
+
+    private fun initListeners(mAdapter: DragAndSwipeAdapter) {
         val listener: OnItemDragListener = object : OnItemDragListener {
             override fun onItemDragStart(viewHolder: ViewHolder, pos: Int) {
                 Log.d(TAG, "drag start")
@@ -106,19 +108,29 @@ class MainActivity : AppCompatActivity(R.layout.activity_universal_recycler) {
                 )
             }
         }
-        val mData = generateData(50)
-        val mAdapter = DragAndSwipeAdapter(mData)
-        mAdapter.draggableModule.isSwipeEnabled = true
-        mAdapter.draggableModule.isDragEnabled = true
+
         mAdapter.draggableModule.setOnItemDragListener(listener)
         mAdapter.draggableModule.setOnItemSwipeListener(onItemSwipeListener)
-        mAdapter.draggableModule.itemTouchHelperCallback
-            .setSwipeMoveFlags(ItemTouchHelper.START or ItemTouchHelper.END)
-        mAdapter.draggableModule.itemTouchHelperCallback.setDragMoveFlags(ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT or ItemTouchHelper.UP or ItemTouchHelper.DOWN)
         mAdapter.setOnItemClickListener { adapter, view, position ->
             Tips.show("position：$position")
         }
+    }
+
+    private fun initView(): DragAndSwipeAdapter {
+        title = "Drag And Swipe"
+        rv.layoutManager = LinearLayoutManager(this)
+        val mAdapter = DragAndSwipeAdapter()
+        mAdapter.setList(generateData(50))
+        mAdapter.draggableModule.isSwipeEnabled = true
+        mAdapter.draggableModule.isDragEnabled = true
+        mAdapter.draggableModule.itemTouchHelperCallback
+            .setSwipeMoveFlags(ItemTouchHelper.START or ItemTouchHelper.END)
+        mAdapter.draggableModule.itemTouchHelperCallback.setDragMoveFlags(
+            ItemTouchHelper.LEFT or
+                    ItemTouchHelper.RIGHT or ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        )
         rv.adapter = mAdapter
+        return mAdapter
     }
 
     private fun generateData(size: Int): MutableList<String> {
