@@ -36,8 +36,6 @@ dependencies {
     /*  BaseRecyclerViewAdapterHelper */
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.3'
 
-    implementation 'androidx.cardview:cardview:1.0.0'
-
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     testImplementation 'junit:junit:4.13'
