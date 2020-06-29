@@ -82,11 +82,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_universal_recycler) {
             override fun onItemSwipeStart(viewHolder: ViewHolder, pos: Int) {
                 Log.d(TAG, "view swiped start: $pos")
                 val holder = viewHolder as BaseViewHolder
+                Log.d(TAG, "view swiped start holder: $holder")
             }
 
             override fun clearView(viewHolder: ViewHolder, pos: Int) {
                 Log.d(TAG, "View reset: $pos")
                 val holder = viewHolder as BaseViewHolder
+                Log.d(TAG, "view swiped start holder: $holder")
             }
 
             override fun onItemSwiped(viewHolder: ViewHolder, pos: Int) {
@@ -120,7 +122,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_universal_recycler) {
         title = "Drag And Swipe"
         rv.layoutManager = LinearLayoutManager(this)
         val mAdapter = DragAndSwipeAdapter()
-        mAdapter.setList(generateData(50))
+        mAdapter.setList(50.generateData())
         mAdapter.draggableModule.isSwipeEnabled = true
         mAdapter.draggableModule.isDragEnabled = true
         mAdapter.draggableModule.itemTouchHelperCallback
@@ -133,9 +135,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_universal_recycler) {
         return mAdapter
     }
 
-    private fun generateData(size: Int): MutableList<String> {
-        val data = ArrayList<String>(size)
-        for (i in 0 until size) {
+    private fun Int.generateData(): MutableList<String> {
+        val data = ArrayList<String>(this)
+        for (i in 0 until this) {
             data.add("item $i")
         }
         return data
